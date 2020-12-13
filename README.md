@@ -109,16 +109,30 @@ The following tables lists the configurable parameters of the chart and their de
 | nginxIngressController.certificateArn                                              | certificate arn managaged by aws                                                                                                         | arn:aws:acm:us-east-1:XXXXXXXXXXXX:certificate/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX |
 | nginxIngressController.vpcCIDR                                                     | CIDR of your cluster vpc                                                                                                                 | XXX.XXX.XXX/XX                                                                      |
 | postgresql.enabled                                                                 | Enables creation of postgresql manifests                                                                                                 | FALSE                                                                               |
+| postgresql.postgresqlUsername                                                      | Username for postgres                                                                                                                    | postgres                                                                            |
+| postgresql.postgresqlPostgresPassword                                              | Postgresql admin password                                                                                                                |                                                                                     |
+| postgresql.postgresqlPassword                                                      | Postgresql password                                                                                                                      |                                                                                     |
+| postgresql.postgresqlDatabase                                                      | Postgresql Database                                                                                                                      | illumidesk                                                                          |
 | datadog.enabled                                                                    | Enables datadog                                                                                                                          | FALSE                                                                               |
+| datadog.datadog.apiKey                                                             | API Key                                                                                                                                 |                                                                                     |
+| datadog.datadog.clusterName                                                        | Name of EKS cluster                                                                                                                      |                                                                                     |
+| datadog.datadog.clusterAgent.enable                                                | Enable Cluster Agent                                                                                                                     | FALSE                                                                              |
+| datadog.datadog.clusterAgent.token                                                 | API token for Cluster Agent                                                                                                              |                                                                                     |
+| datadog.datadog.clusterAgent.metricsProvider                                       | Enable Metrics provider for cluster agent                                                                                                | FALSE                                                                               |
 | graderSetupService.enabled                                                         | Enables Grader Setup Service                                                                                                             | FALSE                                                                               |
 | graderSetupService.graderImage                                                     | Grader Image Name                                                                                                                        | None                                                                                |
-| graderSetupService.postgresNBGraderHost                                            | Provide Host Postgres Server                                                                                                            | illumidesk.XXXXXXXXXXXX.us-east-1.rds.amazonaws.com                                 |
+| graderSetupService.postgresNBGraderHost                                            | Provide Host Postgres Server                                                                                                             | illumidesk.XXXXXXXXXXXX.us-east-1.rds.amazonaws.com                                 |
 | graderSetupService.postgresNBGraderUser                                            | Provide Postgres User                                                                                                                    | postgres                                                                            |
-| graderSetupService.postgresNBGraderPassword                                        | Provide Postgres Password                                                                                                                | None                                                                                |                                                                                                                                        
-
+| graderSetupService.postgresNBGraderPassword                                        | Provide Postgres Password                                                                                                                | None                                                                                |
 
 <br>
 
+### Enviornment Variables
+
+
+
+
+<br>
 ## Validate the Helm Chart
 
 * For nodeport you will need to use your one of your node ips and also the port you defined in your values file. 
