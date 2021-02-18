@@ -25,7 +25,16 @@ spec:
         - configMapRef:
             name: keycloak-postgres-configmap-{{ .Release.Namespace }}
         ports:
-          - containerPort: 8080
+          - name: http
+            containerPort: 8080
+          - name: https
+            containerPort: 8443
+        readinessProbe:
+            httpGet:
+              path: /auth/realms/master
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
       restartPolicy: Always
 
 {{ end }}

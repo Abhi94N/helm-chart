@@ -7,6 +7,7 @@ metadata:
   namespace:  {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    # nginx.ingress.kubernetes.io/auth-url: "https://$host/auth"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Content-Security-Policy: default-src 'self' *;";
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains";
@@ -17,7 +18,7 @@ spec:
   - host: {{ .Values.nginxIngress.host }}
     http:
       paths:
-        - path: /
+        - path: /jupyter/hub
           backend:
             serviceName: proxy-public
             servicePort: 80

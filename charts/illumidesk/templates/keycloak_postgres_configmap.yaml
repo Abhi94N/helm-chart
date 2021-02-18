@@ -13,6 +13,7 @@ data:
   KEYCLOAK_USER: {{ .Values.keyCloak.keycloak_user | quote }}
   KEYCLOAK_PASSWORD: {{ .Values.keyCloak.keycloak_password }}
   DB_PASSWORD: {{ .Values.keyCloak.db_password }}
+  PROXY_ADDRESS_FORWARDING: "true"
 
 
 
