@@ -7,55 +7,41 @@ metadata:
   namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: grader-setup-service-{{ .Release.Name }}
+  name: grader-setup-service-resource-manager
   labels:
     app: illumidesk
-    component: grader-setup-service-{{ .Release.Name }}
+    component: grader-setup-service-resource-manager
 rules:
   - apiGroups:
-     - ""
-     - extensions
-    resources:
-     - services
-     - pods/status
-    verbs:
-     - create
-     - get
-     - list
-     - update
-     - watch
-     - patcn
-     - delete
-  - apiGroups:
-      - "apps"
+      - ""
       - extensions
+      - apps
     resources:
-      - pods
-      - secrets
-      - services
-      - namespaces
       - deployments
+      - pods
+      - services
     verbs:
       - create
       - get
       - list
       - watch
       - delete
+      - update
       - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: grader-setup-service-{{ .Release.Name }}
+  name: grader-setup-service-resource-manager
   labels:
     app: illumidesk
-    component: grader-setup-service-{{ .Release.Name }}
+    component: grader-setup-service-resource-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: grader-setup-service-{{ .Release.Name }}
+  name: grader-setup-service-resource-manager
 subjects:
   - kind: ServiceAccount
     name: illumidesk-account
@@ -107,6 +93,12 @@ spec:
           env:
             - name: GRADER_IMAGE_NAME
               value: {{ .Values.graderSetupService.graderImage }}
+            - name: POSTGRES_GRADER_SETUP_HOST
+              value: {{ .Values.graderSetupService.postgresGraderSetupHost }}
+            - name: POSTGRES_GRADER_SETUP_PASSWORD
+              value: {{ .Values.graderSetupService.postgresGraderSetupPassword }}
+            - name: POSTGRES_GRADER_SETUP_USER
+              value: {{ .Values.graderSetupService.postgresGraderSetupUser }}
             - name: POSTGRES_NBGRADER_HOST
               value: {{ .Values.graderSetupService.postgresNBGraderHost }}
             - name: POSTGRES_NBGRADER_USER
