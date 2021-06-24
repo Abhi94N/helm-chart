@@ -23,11 +23,14 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+
+
 {{- define "imagePullSecret" }}
 {{- with .Values.imageCredentials }}
 {{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username .password .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
 {{- end }}
 {{- end }}
+
 
 {{/*
 Return the Database hostname
@@ -35,8 +38,8 @@ Return the Database hostname
 {{- define "database.host" -}}
 {{- if .Values.postgresql.enabled }}
 {{- printf "%s-%s.%s.%s" .Release.Name "postgresql" .Release.Namespace "svc.cluster.local" -}}
-{{- else if .Values.externaldb.enabled }}
-{{- printf "%s" .Values.externaldb.host -}}
+{{- else }}
+{{- printf "%s" .Values.externalDatabase.host -}}
 {{- end -}}
 {{- end -}}
 
@@ -66,7 +69,7 @@ Return the Database database name
 {{/*
 Return the Database user
 */}}
-{{- define "database.databaseUser" -}}
+{{- define "database.user" -}}
 {{- if .Values.postgresql.enabled }}
     {{- printf "%s" .Values.postgresql.postgresqlUsername -}}
 {{- else -}}
@@ -75,12 +78,12 @@ Return the Database user
 {{- end -}}
 
 {{/*
-Return the Database encrypted password
+Return the Database password
 */}}
-{{- define "database.databaseEncryptedPassword" -}}
+{{- define "database.password" -}}
 {{- if .Values.postgresql.enabled }}
-    {{- .Values.postgresql.postgresqlPassword | b64enc | quote -}}
+    {{- printf "%s" .Values.postgresql.postgresqlPassword -}}
 {{- else -}}
-    {{- .Values.externalDatabase.password | b64enc | quote -}}
+    {{- printf "%s" .Values.externalDatabase.password -}}
 {{- end -}}
 {{- end -}}
